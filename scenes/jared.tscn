@@ -1,0 +1,103 @@
+[gd_scene load_steps=11 format=3 uid="uid://cajisgr8pbaox"]
+
+[ext_resource type="Script" path="res://scripts/jared.gd" id="1_5roxs"]
+[ext_resource type="Texture2D" uid="uid://d3n4m87p78ycb" path="res://assets/sprites/falling/FALLING.svg" id="2_7n7kc"]
+[ext_resource type="Texture2D" uid="uid://cfss0nteltr3o" path="res://assets/sprites/clicked/CLICKED.svg" id="2_admgh"]
+[ext_resource type="Texture2D" uid="uid://c7odfwvp5d4uj" path="res://assets/sprites/grabbed/GRABBED.svg" id="3_2ojau"]
+[ext_resource type="Texture2D" uid="uid://jhy6x51eepr4" path="res://assets/sprites/doubleClicked/DOUBLE_CLICKED.svg" id="3_pn48i"]
+[ext_resource type="Texture2D" uid="uid://dhxh2hn6x8dun" path="res://assets/sprites/idle/IDLE.svg" id="4_70vn1"]
+[ext_resource type="Texture2D" uid="uid://cojncpoja8q3d" path="res://assets/sprites/down/DOWN.svg" id="4_f75if"]
+[ext_resource type="Texture2D" uid="uid://3o7e4okseiof" path="res://assets/sprites/walking/WALKING.svg" id="5_ktun1"]
+[ext_resource type="Texture2D" uid="uid://dvt2akq7googb" path="res://assets/sprites/shaken/SHAKEN.svg" id="6_y1gvl"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_usd8m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_admgh")
+}],
+"loop": true,
+"name": &"clicked",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_pn48i")
+}],
+"loop": true,
+"name": &"double_clicked",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_f75if")
+}],
+"loop": true,
+"name": &"down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7n7kc")
+}],
+"loop": true,
+"name": &"falling",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_2ojau")
+}],
+"loop": true,
+"name": &"grabbed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_70vn1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_y1gvl")
+}],
+"loop": true,
+"name": &"shaken",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_ktun1")
+}],
+"loop": true,
+"name": &"walking",
+"speed": 5.0
+}]
+
+[node name="Jared" type="Node2D"]
+script = ExtResource("1_5roxs")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(64, 64)
+sprite_frames = SubResource("SpriteFrames_usd8m")
+animation = &"down"
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="TimerShake" type="Timer" parent="."]
+
+[node name="StateLabel" type="Label" parent="."]
+offset_right = 128.0
+offset_bottom = 28.0
+text = "IDLE"
+horizontal_alignment = 1
+
+[connection signal="state_change" from="." to="." method="_on_state_change"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="TimerShake" to="." method="_on_timer_shake_timeout"]
